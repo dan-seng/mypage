@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Tip</title>
+  <style>
+    body{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: aliceblue;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+     
+    }
+    .whole-page{
+      width: 340px;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      height: 540px;
+      background-color: white;
+      box-shadow: 0px 5px 7px rgba(0,0,0, 0.5);
+    }
+    .bill, .bills, .num-ppl{
+      width: 100%;
+      margin-bottom: 20px;
+    } 
+    .title{
+      text-align: center;
+      margin-bottom: 20px;
+    }
+   input{
+      margin-top: 5px;
+      height: 30px;
+      width: 97%;
+    }
+    select{
+      width: 97%;
+      height: 30px;
+      margin-top: 5px;
+    }
+    .butt{
+      text-align: center;
+    }
+
+    .butt button{
+      background-color: rgba(17, 182, 127, 0.664);
+      border: none;
+      color: white;
+      width: 97%;
+      height: 32px;
+      border-radius: 3px;
+      font-size: 15px;
+      transition: all 0.15s;
+    }
+    .butt button:hover{ 
+      background-color: rgba(8, 142, 97, 0.612);
+      transform: scale(1.03);
+    }
+    .butt button:active{
+      background-color: rgba(8, 142, 97, 0.612);
+      transform: scale(0.97);
+    }
+    
+    .highlight  {
+    background-color: #222222;
+    color: white;
+   }
+   .highlight .whole-page{
+    box-shadow: 0px 5px 77px rgba(90, 201, 235, 0.5); 
+   }
+.title button{
+background: #555;
+color: white;
+border: none;
+padding: 0.5rem 1rem;
+cursor: pointer;
+border-radius: 5px;
+transition: all 0.15s;
+}
+.title button:hover{
+background: #777;
+}
+
+
+   
+  </style>
+</head>
+<body>
+  <div class="whole-page" id="whole">
+      <div class="title">
+        <h1>Tip Calculator</h1>
+        <hr>
+        <button id="addClassButton">Dark/Light theme</button>
+      </div>
+      <div class="ill">
+        <label for="bill">Bill Amount</label><br>
+        <input type="number" placeholder="Enter bill amount" id="bill" class="bill">  
+      </div>
+      <div class="bill">
+        <label for="bill">Tip Percentage</label><br>
+       <select name="bill" id="tip" class="tip">
+        <option value="10" >10%</option>
+        <option value="15">15%</option>
+        <option value="20">20%</option>
+        <option value="25">25%</option>
+       </select>
+      </div>
+      <div class="num-ppl">
+        <label for="num">Number Of People (Optional)</label> <br>
+        <input type="number" placeholder="Enter Number of people" id="people" class="people" min="1">
+      </div>
+
+      <div class="butt">
+        <button onclick="calculate()">Calculate</button>
+      </div>
+
+      <div class="for-ans">
+        <p id="tipAmount">Tip Amount: $0</p>
+        <p id="totalAmount">Total Amount: $0</p>
+        <p id="perPerson">Per Person: $0</p>
+      </div>
+      
+  </div>
+
+  <script>
+
+function calculate(){
+const bill = parseFloat(document.getElementById('bill').value);
+const tipPercentage = parseInt(document.getElementById('tip').value);
+const people = parseInt(document.getElementById('people').value) || 1;
+ 
+if (isNaN(bill) || bill <= 0) {
+alert('Please enter a valid bill amount');
+return;
+}
+
+const tipAmount = (bill * tipPercentage)/100 ;
+const totalAmount = bill + tipAmount ;
+const perPerson = totalAmount / people ;
+
+document.getElementById('tipAmount').innerHTML = `Tip Amount: $${tipAmount}`;
+document.getElementById('totalAmount').innerHTML = `Total Amount: $${totalAmount}`;
+document.getElementById('perPerson').innerHTML = `Per Person: $${perPerson}`;
+}
+
+
+const button = document.getElementById('addClassButton');
+const body = document.body;
+const whole = document.getElementById('whole');
+button.addEventListener('click', () => {
+body.classList.toggle('highlight');
+whole.classList.toggle('highlight');
+});
+
+
+  </script>
+</body>
+</html>

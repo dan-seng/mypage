@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Matching Game</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="game-container">
+    <h1>Memory Matching Game</h1>
+    <div id="game-board"></div>
+  </div>
+  <script >
+    const gameBoard = document.getElementById('game-board');
+const symbols = ['🍎', '🍊', '🍋', '🍌', '🍉', '🍇', '🍓', '🍒'];
+let cards = [...symbols, ...symbols];
+let flippedCards = [];
+let matchedCards = [];
+
+function shuffle(array) {
+  array.sort(() => Math.random() - 0.5);
+}
+
+function createCard(symbol) {
+  const card = document.createElement('div');
+  card.classList.add('card');
+  card.dataset.symbol = symbol;
+  card.innerHTML = '?';
+  card.addEventListener('click', flipCard);
+  return card;
+}
+
+function flipCard() {
+  if (flippedCards.length < 2 && !this.classList.contains('flipped')) {
+    this.classList.add('flipped');
+    this.innerHTML = this.dataset.symbol;
+    flippedCards.push(this);
+
+    if (flippedCards.length === 2) {
+      checkMatch();
+    }
+  }
+}
+
+function checkMatch() {
+  const [card1, card2] = flippedCards;
+  if (card1.dataset.symbol === card2.dataset.symbol) {
+    card1.classList.add('matched');
+    card2.classList.add('matched');
+    matchedCards.push(card1, card2);
+    flippedCards = [];
+    if (matchedCards.length === cards.length) {
+      setTimeout(() => alert('You won!'), 500);
+    }
+  } else {
+    setTimeout(() => {
+      card1.classList.remove('flipped');
+      card1.innerHTML = '?';
+      card2.classList.remove('flipped');
+      card2.innerHTML = '?';
+      flippedCards = [];
+    }, 1000);
+  }
+}
+
+function startGame() {
+  shuffle(cards);
+  gameBoard.innerHTML = '';
+  cards.forEach(symbol => {
+    const card = createCard(symbol);
+    gameBoard.appendChild(card);
+  });
+}
+
+startGame();
+
+  </script>
+</body>
+</html>

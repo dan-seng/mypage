@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <span class="logo-icon">D</span> Daniel
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="projects.html" class="nav-link">Portfolio/ Projects</a></li>
+        <li><a href="blog.html" class="nav-link">Blog</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+      </ul>
+      <button  id="toggleButton" ><i id="modeIcon" class="fas fa-sun"></i></button>
+    <button class="quick-contact" onclick="
+      window.location.href='qcontact.html';
+    ">Quick Contact</button>
+    </nav>
+  </header>
+
+    
+    <div class="contact-us">
+        <h1 class="conta">Contact Me</h1>
+        <p class="pcont">Any questions or remarks? Just write us a message!</p>
+        <form class="contact-inputs">
+        <textarea id="message" name="message" rows="5" required></textarea>
+        <div class="inputs">
+          <input type="email" id="email" name="email" placeholder="Enter a valid email address" required>
+          <input type="text" id="name" name="name" placeholder="Enter your Name" required>
+        </div>
+        <button type="submit">SUBMIT</button>
+        </form>
+    </div>
+    <div class="info-sections">
+        <div class="info-section">
+            <div class="icon">
+                <i class="fas fa-share-alt"></i>
+            </div>
+            <h2>Social Medias</h2>
+            <div class="links">
+                <a href="https://web.facebook.com/dan16son"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/_dan_el/"><i class="fab fa-instagram"></i></a>
+                <a href="https://t.me/dan_gidey"><i class="fab fa-telegram"></i></a>
+                <a href="https://github.com/dan-seng"><i class="fab fa-github"></i></a>
+                <a href="www.da16gi@gmail.com"><i class="fab fa-m"></i></a>
+              </div>
+        </div>
+        <div class="info-section">
+            <div class="icon">&#x260E;</div>
+            <h2>PHONE Number</h2>
+            <a href="tel:+251945012123">
+                +251 945 012123
+            </a> <br>
+          <a href="tel: +251714986741">
+            +251 714 986741
+          </a>
+        </div>
+        <div class="info-section">
+            <div class="icon">&#x1F4CD;</div>
+            <h2>My LOCATION</h2>
+            <p class="icda">Mekelle, TI, Ethiopia</p>
+        </div>
+ 
+    </div>          
+    <footer class="footer">
+        &copy; Daniel Gidey &middot; <a href="http://github.com/dan-seng" target="_blank"><i class="fab fa-github"></i></a>
+      </footer>
+
+      <script  src="script.js"> </script>
+</body>
+</html>

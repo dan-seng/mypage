@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Task Organizer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+.header h1 {
+    margin-bottom: 0.5rem;
+}
+
+.theme-btn {
+    background: #555;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.theme-btn:hover {
+    background: #777;
+}
+
+main {
+    flex: 1;
+    padding: 1rem;
+}
+
+.task-input {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.task-input input {
+    width: 60%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.task-input .btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.task-input .btn:hover {
+    background: #218838;
+}
+
+.task-controls {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.task-controls .filter-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.task-controls .filter-btn:hover {
+    background: #0056b3;
+}
+
+.task-search {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.task-search input {
+    width: 80%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.task-item.completed {
+    text-decoration: line-through;
+    background-color: #d4edda;
+}
+
+footer {
+    text-align: center;
+    background: #333;
+    color: white;
+    padding: 0.5rem;
+}
+
+.dark-theme{
+    background-color: black;
+}
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Smart Task Organizer</h1>
+        <button id="theme-toggle" class="theme-btn">Light/Dark Mode</button>
+    </header>
+    
+    <main>
+        <section class="task-input">
+            <input type="text" id="task-title" placeholder="Enter task title" />
+            <button id="add-task" class="btn">Add Task</button>
+        </section>
+
+        <section class="task-controls">
+            <button class="filter-btn" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+            <button class="filter-btn" data-filter="pending">Pending</button>
+        </section>
+
+        <section class="task-search">
+            <input type="text" id="search-bar" placeholder="Search tasks..." />
+            <i class="fas fa-search"></i>
+        </section>
+
+        <section class="task-list" id="task-list">
+          
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Smart Task Organizer</p>
+    </footer>
+    <script>
+      
+const taskInput = document.getElementById('task-title');
+const addTaskBtn = document.getElementById('add-task');
+const taskList = document.getElementById('task-list');
+const themeToggleBtn = document.getElementById('theme-toggle');
+const filterBtns = document.querySelectorAll('.filter-btn');
+const searchBar = document.getElementById('search-bar');
+
+
+let tasks = [];
+
+
+addTaskBtn.addEventListener('click', () => {
+    const taskTitle = taskInput.value.trim();
+    if (taskTitle) {
+        const task = {
+            id: Date.now(),
+            title: taskTitle,
+            completed: false,
+        };
+        tasks.push(task);
+        taskInput.value = '';
+        renderTasks();
+    } else {
+        alert('Please enter a task title!');
+    }
+});
+
+function renderTasks(filter = 'all') {
+    taskList.innerHTML = '';
+
+    const filteredTasks = tasks.filter((task) => {
+        if (filter === 'all') return true;
+        if (filter === 'completed') return task.completed;
+        if (filter === 'pending') return !task.completed;
+    });
+
+    filteredTasks.forEach((task) => {
+        const taskItem = document.createElement('div');
+        taskItem.className = `task-item ${task.completed ? 'completed' : ''}`;
+        taskItem.dataset.id = task.id;
+        taskItem.textContent = task.title;
+
+      
+        taskItem.addEventListener('click', () => toggleTaskCompletion(task.id));
+
+        taskList.appendChild(taskItem);
+    });
+}
+
+
+function toggleTaskCompletion(taskId) {
+    tasks = tasks.map((task) =>
+        task.id === taskId ? { ...task, completed: !task.completed } : task
+    );
+    renderTasks();
+}
+
+filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+        renderTasks(filter);
+    });
+});
+
+searchBar.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    const filteredTasks = tasks.filter((task) =>
+        task.title.toLowerCase().includes(query)
+    );
+    taskList.innerHTML = '';
+    filteredTasks.forEach((task) => {
+        const taskItem = document.createElement('div');
+        taskItem.className = `task-item ${task.completed ? 'completed' : ''}`;
+        taskItem.textContent = task.title;
+        taskList.appendChild(taskItem);
+    });
+});
+
+
+themeToggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-theme');
+});
+
+
+    </script>
+</body>
+</html>
